@@ -37,6 +37,7 @@
 	  <input type="text" id="id" name="id" required pattern="[0-9]+" maxlength="9" title="Numerical ID">
 	  <br>
 
+    <!--
         <label>Subject:</label><br><br>
 	  <label for="science">Science</label><br>
 	  <input type="radio" id="science" name="subject" value="Science"><br>
@@ -54,6 +55,23 @@
 	  <input type="radio" id="geography" name="subject" value="Geography"><br>
         <span><?php echo $subject_err;?></span>
 	  <br>
+    _-->
+
+    <?php require("dbconnect.php");?>
+      <select name="subject">
+      <option value="">Select Subject</option>
+    <?php
+      $conn = connectDB(); 
+      $query ="SELECT subName FROM A2subject";
+      $result = $conn->query($query);
+      if($result->num_rows> 0){
+        while($optionData=$result->fetch_assoc()){
+        $option =$optionData['subName'];
+    ?>
+        <option value="<?php echo $option; ?>" ><?php echo $option; ?> </option>
+   <?php
+    }}
+    ?>
 
         <input type="submit" value="Submit">
 
@@ -118,11 +136,11 @@
             echo "Invalid entry";
       }
 
-      require "dbconnect.php";
+      //require "dbconnect.php";
 
-      $conn = connectDB();
+      //$conn = connectDB();
 
-      $stmt = $conn->prepare("INSERT INTO A2Tutor (id, firstName, lastName, subject) VALUES(?, ?, ?, ?)");
+      $stmt = $conn->prepare("INSERT INTO A2tutor (id, firstName, lastName, subject) VALUES(?, ?, ?, ?)");
 
       $stmt->bind_param("isss", $temp_id, $temp_fname, $temp_lname, $temp_subject);
 
