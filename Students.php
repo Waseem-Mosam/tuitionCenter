@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<html>
-  <head>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Registration Form</title>
   </head>      
   <body>  
-    <form action="" method="post" >
+   <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
       <label for="firstName">First Name:</label>
       <input type="text" id="firstName" name="firstName" required><br><br>
       <label for="lastName">Last Name:</label>
