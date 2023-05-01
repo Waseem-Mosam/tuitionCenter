@@ -18,7 +18,7 @@
 	
     <h1>Report E: List all tutors</h1>
 
-    <table>
+    <table class="enroll">
         <tr>
             <th>Tutors<th>
         </tr>
