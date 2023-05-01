@@ -18,7 +18,7 @@
 	
     <h1>Report C: List all enrolled students. Include all personal details and all the subjects they are taking</h1>
 
-    <table>
+    <table class="enroll">
         <tr>
             <th>Student ID<th>
             <th>First Name<th>
