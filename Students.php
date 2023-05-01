@@ -27,14 +27,24 @@
       <input type="text" id="parentAddress" name="parentAddress" required><br><br>
       <label for="parentID">Parent ID:</label>
       <input type="number" id="parentID" name="parentID" maxlength="9" required><br><br>
-      <label for="subjects">Select Subjects:</label><br>
-      <select id="subjects" name="subjects[]" multiple required>
-        <option value="math">Math</option>
-        <option value="english">English</option>
-        <option value="science">Science</option>
-        <option value="history">History</option>
-        <option value="computers">Computers</option>
-      </select><br><br>  
+
+
+      <?php require("dbconnect.php");?>
+      <select name="subject">
+      <option value="">Select Subject</option>
+    <?php
+      $conn = connectDB(); 
+      $query ="SELECT subName FROM A2subject";
+      $result = $conn->query($query);
+      if($result->num_rows> 0){
+        while($optionData=$result->fetch_assoc()){
+        $option =$optionData['subName'];
+    ?>
+        <option value="<?php echo $option; ?>" ><?php echo $option; ?> </option>
+   <?php
+    }}
+    ?>
+      
       <input type="submit" value="Submit">
     </form>
 
@@ -45,108 +55,119 @@ $firstNameErr = $lastNameErr = $ageErr = $parentFirstNameErr = $parentLastNameEr
 
 // Validate input and sanitize data
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  if (empty($_POST["firstName"])) {
+  if (!empty($_POST["firstName"])) {
     $firstNameErr = "First name is required";
   } else {
     $firstName = test_input($_POST["firstName"]);
-    // Check if name only contains letters and whitespace
-    if (!preg_match("/^[a-zA-Z ]*$/",$firstName)) {
-      $firstNameErr = "Only letters and white space allowed"; 
-    }
+    
   }
 }
 
-  if (empty($_POST["lastName"])) {
+  if (!empty($_POST["lastName"])) {
     $lastNameErr = "Last name is required";
   } else {
     $lastName = test_input($_POST["lastName"]);
-    // Check if name only contains letters and whitespace
-    if (!preg_match("/^[a-zA-Z ]*$/",$lastName)) {
-      $lastNameErr = "Only letters and white space allowed"; 
-    }
+    
   }
 
-  if (empty($_POST["age"])) {
+  if (!empty($_POST["age"])) {
     $ageErr = "Age is required";
   } else {
     $age = test_input($_POST["age"]);
-    // Check if age is a number
-    if (!is_numeric($age)) {
-      $ageErr = "Age must be a number"; 
-    }
+    
   }
 
-  if (empty($_POST["parentFirstName"])) {
+  if (!empty($_POST["parentFirstName"])) {
     $parentFirstNameErr = "Parent first name is required";
   } else {
     $parentFirstName = test_input($_POST["parentFirstName"]);
-    // Check if name only contains letters and whitespace
-    if (!preg_match("/^[a-zA-Z ]*$/",$parentFirstName)) {
-      $parentFirstNameErr = "Only letters and white space allowed"; 
-    }
+   
   }
 
-  if (empty($_POST["parentLastName"])) {
+  if (!empty($_POST["parentLastName"])) {
     $parentLastNameErr = "Parent last name is required";
   } else {
     $parentLastName = test_input($_POST["parentLastName"]);
-    // Check if name only contains letters and whitespace
-    if (!preg_match("/^[a-zA-Z ]*$/",$parentLastName)) {
-      $parentLastNameErr = "Only letters and white space allowed"; 
-    }
+    
   }
 
-  if (empty($_POST["parentPhone"])) {
+  if (!empty($_POST["parentPhone"])) {
     $parentPhoneErr = "Parent phone number is required";
   } else {
     $parentPhone = test_input($_POST["parentPhone"]);
-    // Check if phone number is valid
-    if (!preg_match("/^[0-9]{8}$/",$parentPhone)) {
-      $parentPhoneErr = "Invalid phone number"; 
-    }
+    
   }
 
-  if (empty($_POST["parentAddress"])) {
+  if (!empty($_POST["parentAddress"])) {
     $parentAddressErr = "Parent address is required";
   } else {
     $parentAddress = test_input($_POST["parentAddress"]);
   }
 
-  if (empty($_POST["parentID"])) {
+  if (!empty($_POST["parentID"])) {
     $parentIDErr = "Parent ID is required";
   } else {
     $parentID = test_input($_POST["parentID"]);
    
-    if (strlen($parentID) != 9 || !is_numeric($parentID)) {
-      $parentIDErr = "Invalid ID number"; 
-    }
+   
   }
-  if (empty($_POST["StudentID"])) {
+  if (!empty($_POST["StudentID"])) {
     $StudentIDErr = "Student ID is required";
   } else {
     $StudentID= test_input($_POST["StudentID"]);
    
-    if (strlen($StudentID) != 9 || !is_numeric($StudentID)) {
-      $StudentIDErr = "Invalid ID number"; 
-    }
+   
   }
 
 
-if (empty($_POST["subjects"])) {
-  $subjectsErr  = "At least one subject is required";
-} else {
-  $subjects = test_input($_POST["subjects"]);
+  if (!empty($_POST["subject"])){
+    $subject = test_input($_POST["subject"]);
+}
+else {
+  $subject_err = "Please select a subject";
 }
 
+}
 function test_input($data) {
   $data = trim($data);
   $data = stripslashes($data);
   $data = htmlspecialchars($data);
   return $data;
 }
-require "dbconnect.php";
 
-$conn = connectDB();
+if (!preg_match("/^[a-zA-Z ]*$/",$firstName)) {
+  $firstNameErr = "Only letters and white space allowed"; 
+}
+
+if (!preg_match("/^[a-zA-Z ]*$/",$lastName)) {
+  $lastNameErr = "Only letters and white space allowed"; 
+}
+
+if (!is_numeric($age)) {
+  $ageErr = "Age must be a number"; 
+}
+
+if (!preg_match("/^[0-9]{8}$/",$parentPhone)) {
+  $parentPhoneErr = "Invalid phone number"; 
+}
+if (strlen($StudentID) != 9 || !is_numeric($StudentID)) {
+  $StudentIDErr = "Invalid ID number"; 
+}
+if (strlen($parentID) != 9 || !is_numeric($parentID)) {
+  $parentIDErr = "Invalid ID number"; 
+}
+ if (!preg_match("/^[a-zA-Z ]*$/",$parentFirstName)) {
+  $parentFirstNameErr = "Only letters and white space allowed"; 
+}
+
+if (!preg_match("/^[a-zA-Z ]*$/",$parentLastName)) {
+  $parentLastNameErr = "Only letters and white space allowed"; 
+}
+
+
+//require "dbconnect.php";
+
+//$conn = connectDB();
 
   
     $stmt1 = $conn->prepare("INSERT INTO A2parent (parentID, firstName, lastName, phoneNum, address) VALUES (?, ?, ?, ?, ?)");
@@ -157,6 +178,10 @@ $conn = connectDB();
     $stmt2 = $conn->prepare("INSERT INTO A2student (firstName, lastName, age, parentId,studentID) VALUES (?, ?, ?, ?, ?)");
     $stmt2->bind_param("ssiii", $firstName, $lastName, $age, $parentID, $StudentID);
     $stmt2->execute();
+    
+    $stmt3 = $conn->prepare("INSERT INTO A2studentSubject (studentID,subName) VALUES (?, ?)");
+    $stmt3->bind_param("si", $subject, $StudentID);
+    $stmt3->execute();
     
     
 
@@ -172,9 +197,16 @@ if($stmt2->execute()){
 else{
   echo("Error with insertion");
 }
+if($stmt2->execute()){
+  echo("Record inserted");
+}
+else{
+  echo("Error with insertion");
+}
 
 $stmt1->close();
 $stmt2->close();
+$stmt3->close();
 $conn->close();
 
 ?>
