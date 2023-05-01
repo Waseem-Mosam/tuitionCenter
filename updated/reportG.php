@@ -40,7 +40,7 @@
 
 	</form>
 
-    <table>
+    <table  class="enroll">
         <tr>
             <th>Time<th>
             <th>Monday<th>
