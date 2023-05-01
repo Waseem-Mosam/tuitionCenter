@@ -3,7 +3,7 @@
 
   <head>
     <title>Tutor Registration</title>
-    <meta charset=utf-8">
+    <meta charset="utf-8">
     <meta name="author" content="Dihutswane Mosieyane">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
   </head>
@@ -43,6 +43,9 @@
 
     <?php
         }}
+
+      $result->close();
+	    $conn->close();
     ?>
 
     
