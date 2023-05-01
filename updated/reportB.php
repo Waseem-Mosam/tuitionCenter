@@ -18,7 +18,7 @@
 	
     <h1>Report B: List all enrolled students</h1>
 
-    <table>
+    <table class="enroll">
         <tr>
             <th>Student<th>
         </tr>
