@@ -54,6 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       $firstNameErr = "Only letters and white space allowed"; 
     }
   }
+}
 
   if (empty($_POST["lastName"])) {
     $lastNameErr = "Last name is required";
@@ -137,16 +138,12 @@ if (empty($_POST["subjects"])) {
   $subjects = test_input($_POST["subjects"]);
 }
 
-function test_input($data){
-
+function test_input($data) {
   $data = trim($data);
   $data = stripslashes($data);
   $data = htmlspecialchars($data);
-
   return $data;
-
 }
-
 require "dbconnect.php";
 
 $conn = connectDB();
