@@ -18,7 +18,7 @@
 	
     <h1>Report A: List all the offered subjects, including their details.</h1>
 
-    <table>
+    <table class="enroll">
         <tr>
             <th>Subject<th>
         </tr>
